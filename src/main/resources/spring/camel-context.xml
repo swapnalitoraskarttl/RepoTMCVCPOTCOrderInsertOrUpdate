@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="          http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans.xsd            http://camel.apache.org/schema/cxf           http://camel.apache.org/schema/cxf/camel-cxf.xsd                http://camel.apache.org/schema/spring                 http://camel.apache.org/schema/spring/camel-spring.xsd                http://cxf.apache.org/transports/http/configuration     http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+   
+    <cxf:cxfEndpoint
+        address="http://localhost:8099/TMCVCPOTCOrderInsertOrUpdate" id="CRP_API">
+        <cxf:properties>
+            <entry key="dataFormat" value="MESSAGE"/>
+        </cxf:properties>
+    </cxf:cxfEndpoint>
+    
+    <cxf:cxfEndpoint
+        address="http://172.24.47.117//eai_secure_enu/start.swe?SWEExtSource=SecureWebService&amp;SWEExtCmd=Execute"
+        id="rsAPI" wsdlURL="CPPUROrderCRM.wsdl">
+        <cxf:properties>
+            <entry key="dataFormat" value="MESSAGE"/>
+        </cxf:properties>
+    </cxf:cxfEndpoint>
+    
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asi="http://siebel.com/asi/" xmlns:ord="http://www.siebel.com/xml/Order%20Interface">
+        
+        <route id="simple-route">
+            <from id="_from1" uri="cxf:bean:CRP_API?loggingFeatureEnabled=true"/>
+
+			<setHeader headerName="OrderType" id="OrderType">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:OrderType/text()</xpath>
+            </setHeader>
+            <setHeader headerName="OrderTypeId" id="OrderTypeId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:OrderTypeId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="OrderSubType" id="OrderSubType">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:OrderSubType/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMSparesOrderType" id="TMSparesOrderType">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMSparesOrderType/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMOrderReason" id="TMOrderReason">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMOrderReason/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMPCRaisedBy" id="TMPCRaisedBy">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMPCRaisedBy/text()</xpath>
+            </setHeader>
+            <setHeader headerName="ParentOrderId" id="ParentOrderId">
+               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ParentOrderId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="IntegrationId" id="IntegrationId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:IntegrationId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="PrimaryPositionId" id="PrimaryPositionId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:PrimaryPositionId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="PrimaryOrganizationId" id="PrimaryOrganizationId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:PrimaryOrganizationId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="ReturnToAccountId" id="ReturnToAccountId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ReturnToAccountId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMOTCExpirydate" id="TMOTCExpirydate">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMOTCExpirydate/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMPurchaseOrder" id="TMPurchaseOrder">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMPurchaseOrder/text()</xpath>
+            </setHeader>
+            <setHeader headerName="Organization" id="Organization">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfRelatedOrganization/ord:RelatedOrganization/ord:Organization/text()</xpath>
+            </setHeader>
+            <setHeader headerName="SourceInventoryLocationId" id="SourceInventoryLocationId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:SourceInventoryLocationId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="Status" id="Status">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:Status/text()</xpath>
+            </setHeader>
+             <setHeader headerName="AccountId" id="AccountId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:AccountId/text()</xpath>
+            </setHeader>
+             <setHeader headerName="RelatedSalesRepId" id="RelatedSalesRepId">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfRelatedSalesRep/ord:RelatedSalesRep/ord:Id/text()</xpath>
+            </setHeader>
+            <setHeader headerName="Position" id="Position">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfRelatedSalesRep/ord:RelatedSalesRep/ord:Position/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMProduct" id="TMProduct">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:TMProduct/text()</xpath>
+            </setHeader>
+            <setHeader headerName="PartNumber" id="PartNumber">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:PartNumber/text()</xpath>
+             </setHeader>
+            <setHeader headerName="RequestedQuantity" id="RequestedQuantity">
+               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:RequestedQuantity/text()</xpath>
+            </setHeader>
+            <setHeader headerName="LineItemsIntegrationId" id="LineItemsIntegrationId">
+               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:IntegrationId/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMChannel" id="TMChannel">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMChannel/text()</xpath>
+            </setHeader>
+            <setHeader headerName="TMGSTIN" id="TMGSTIN">
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMGSTIN/text()</xpath>
+            </setHeader>
+            
+            <setHeader headerName="Content-Type" id="_setHeader41">
+                <constant>application/xml</constant>
+            </setHeader>
+            <setHeader headerName="CamelHttpMethod" id="_setHeader1">
+                <constant>GET</constant>
+            </setHeader>
+            <setHeader headerName="Authorization" id="_setHeader2">
+                <simple>Basic Vk1BMDcxMzQ6VEFUQTIwMTU=</simple>
+            </setHeader>
+            
+            <setBody id="route-setBodyCRM">
+            	<simple>
+            		&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asi="http://siebel.com/asi/" xmlns:ord="http://www.siebel.com/xml/Order%20Interface">
+   &lt;soapenv:Header/>
+   &lt;soapenv:Body&gt;
+      &lt;asi:TMCVCPOTCOrderInsertOrUpdate_Input&gt;
+         &lt;ord:ListOfOrderInterface&gt;
+            &lt;!--Zero or more repetitions:-->
+            &lt;ord:Orders operation="">
+               &lt;ord:ParentProductLine&gt;&lt;/ord:ParentProductLine&gt;
+               &lt;ord:ProductAMC&gt;&lt;/ord:ProductAMC&gt;
+               &lt;ord:Product&gt;&lt;/ord:Product&gt;
+               &lt;ord:ProductLine&gt;&lt;/ord:ProductLine&gt;
+               &lt;ord:Id&gt;&lt;/ord:Id&gt;
+               &lt;ord:AvailableStatus&gt;&lt;/ord:AvailableStatus&gt;
+               &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
+               &lt;ord:Account&gt;&lt;/ord:Account&gt;
+               &lt;ord:CustomerSegment&gt;&lt;/ord:CustomerSegment&gt;
+               &lt;ord:AccountId>${header.AccountId}&lt;/ord:AccountId&gt;
+               &lt;ord:AccountIntegrationId&gt;&lt;/ord:AccountIntegrationId&gt;
+               &lt;ord:AccountSite&gt;&lt;/ord:AccountSite&gt;
+               &lt;ord:PurchaseOrderNumber&gt;&lt;/ord:PurchaseOrderNumber&gt;
+               &lt;ord:Active&gt;&lt;/ord:Active&gt;
+               &lt;ord:ContractId&gt;&lt;/ord:ContractId&gt;
+               &lt;ord:ContractIntegrationId&gt;&lt;/ord:ContractIntegrationId&gt;
+               &lt;ord:ContractName&gt;&lt;/ord:ContractName&gt;
+               &lt;ord:Approved&gt;&lt;/ord:Approved&gt;
+               &lt;ord:ApprovedBy&gt;&lt;/ord:ApprovedBy&gt;
+               &lt;ord:ApprovedBy-EmployeeId&gt;&lt;/ord:ApprovedBy-EmployeeId&gt;
+               &lt;ord:ApprovedByDate&gt;&lt;/ord:ApprovedByDate&gt;
+               &lt;ord:StatusAsOfDate&gt;&lt;/ord:StatusAsOfDate&gt;
+               &lt;ord:AvailableDate&gt;&lt;/ord:AvailableDate&gt;
+               &lt;ord:IntegrationMessage&gt;&lt;/ord:IntegrationMessage&gt;
+               &lt;ord:ExternalOrderNumber&gt;&lt;/ord:ExternalOrderNumber&gt;
+               &lt;ord:IntegrationStatus&gt;&lt;/ord:IntegrationStatus&gt;
+               &lt;ord:BillToAccount&gt;&lt;/ord:BillToAccount&gt;
+               &lt;ord:BillToAccountId&gt;&lt;/ord:BillToAccountId&gt;
+               &lt;ord:BillToAccountIntegrationId&gt;&lt;/ord:BillToAccountIntegrationId&gt;
+               &lt;ord:BillToAccountSite&gt;&lt;/ord:BillToAccountSite&gt;
+               &lt;ord:BillToAddressId&gt;&lt;/ord:BillToAddressId&gt;
+               &lt;ord:BillToAddressIntegrationId&gt;&lt;/ord:BillToAddressIntegrationId&gt;
+               &lt;ord:BillToContactId&gt;&lt;/ord:BillToContactId&gt;
+               &lt;ord:BillToContactIntegrationId&gt;&lt;/ord:BillToContactIntegrationId&gt;
+               &lt;ord:BillTo-FirstName&gt;&lt;/ord:BillTo-FirstName&gt;
+               &lt;ord:BillTo-LastName&gt;&lt;/ord:BillTo-LastName&gt;
+               &lt;ord:PayToContactFirstName&gt;&lt;/ord:PayToContactFirstName&gt;
+               &lt;ord:PayToContactLastName&gt;&lt;/ord:PayToContactLastName&gt;
+               &lt;ord:ShipTo-FirstName&gt;&lt;/ord:ShipTo-FirstName&gt;
+               &lt;ord:ShipTo-LastName&gt;&lt;/ord:ShipTo-LastName&gt;
+               &lt;ord:BillableFlag&gt;&lt;/ord:BillableFlag&gt;
+               &lt;ord:CampaignId&gt;&lt;/ord:CampaignId&gt;
+               &lt;ord:CampaignIntegrationId&gt;&lt;/ord:CampaignIntegrationId&gt;
+               &lt;ord:CampaignName&gt;&lt;/ord:CampaignName&gt;
+               &lt;ord:Carrier&gt;&lt;/ord:Carrier&gt;
+               &lt;ord:Comments&gt;&lt;/ord:Comments&gt;
+               &lt;ord:ContactFirstName&gt;&lt;/ord:ContactFirstName&gt;
+               &lt;ord:ContactId&gt;&lt;/ord:ContactId&gt;
+               &lt;ord:ContactIntegrationId&gt;&lt;/ord:ContactIntegrationId&gt;
+               &lt;ord:ContactLastName&gt;&lt;/ord:ContactLastName&gt;
+               &lt;ord:TMTaxCategory&gt;&lt;/ord:TMTaxCategory&gt;
+               &lt;ord:TMInvoiceFormatOrg&gt;&lt;/ord:TMInvoiceFormatOrg&gt;
+               &lt;ord:TMOrderCategory&gt;&lt;/ord:TMOrderCategory&gt;
+               &lt;ord:TMDealerState&gt;&lt;/ord:TMDealerState&gt;
+               &lt;ord:TMDivisionName&gt;&lt;/ord:TMDivisionName&gt;
+               &lt;ord:TMPCRaisedBy>${header.TMPCRaisedBy}&lt;/ord:TMPCRaisedBy&gt;
+               &lt;ord:TMInvoiceFormatDiv&gt;&lt;/ord:TMInvoiceFormatDiv&gt;
+               &lt;ord:TMOrderPaymentType&gt;&lt;/ord:TMOrderPaymentType&gt;
+               &lt;ord:TMPCOrderTypeVC&gt;&lt;/ord:TMPCOrderTypeVC&gt;
+               &lt;ord:TMFinalInvoiceAmount&gt;&lt;/ord:TMFinalInvoiceAmount&gt;
+               &lt;ord:TMOtherChargeAmount&gt;&lt;/ord:TMOtherChargeAmount&gt;
+               &lt;ord:TMPurchaseOrder>${header.TMPurchaseOrder}&lt;/ord:TMPurchaseOrder&gt;
+               &lt;ord:TMOtherChargePercent&gt;&lt;/ord:TMOtherChargePercent&gt;
+               &lt;ord:TMSumLineItemLineTotal&gt;&lt;/ord:TMSumLineItemLineTotal&gt;
+               &lt;ord:CurrencyCode&gt;&lt;/ord:CurrencyCode&gt;
+               &lt;ord:OrderType>${header.OrderType}&lt;/ord:OrderType&gt;
+               &lt;ord:HoldReason&gt;&lt;/ord:HoldReason&gt;
+               &lt;ord:Description&gt;&lt;/ord:Description&gt;
+               &lt;ord:DestinationInventoryLocationId&gt;&lt;/ord:DestinationInventoryLocationId&gt;
+               &lt;ord:DestinationInventoryLocation&gt;&lt;/ord:DestinationInventoryLocation&gt;
+               &lt;ord:DestinationInventoryLocationIntegrationId&gt;&lt;/ord:DestinationInventoryLocationIntegrationId&gt;
+               &lt;ord:DiscountAmount&gt;&lt;/ord:DiscountAmount&gt;
+               &lt;ord:IntegrationStatusAsOfDate&gt;&lt;/ord:IntegrationStatusAsOfDate&gt;
+               &lt;ord:EntitlementId&gt;&lt;/ord:EntitlementId&gt;
+               &lt;ord:EntitlementName&gt;&lt;/ord:EntitlementName&gt;
+               &lt;ord:ShippingCharges&gt;&lt;/ord:ShippingCharges&gt;
+               &lt;ord:ShippingTerms&gt;&lt;/ord:ShippingTerms&gt;
+               &lt;ord:HoldFlag&gt;&lt;/ord:HoldFlag&gt;
+               &lt;ord:IntegrationId>${header.IntegrationId}&lt;/ord:IntegrationId&gt;
+               &lt;ord:OpportunityName&gt;&lt;/ord:OpportunityName&gt;
+               &lt;ord:OpportunityId&gt;&lt;/ord:OpportunityId&gt;
+               &lt;ord:OrderDate&gt;&lt;/ord:OrderDate&gt;
+               &lt;ord:OrderNumber&gt;&lt;/ord:OrderNumber&gt;
+               &lt;ord:OrderPriority&gt;&lt;/ord:OrderPriority&gt;
+               &lt;ord:OrderSubType>${header.OrderSubType}&lt;/ord:OrderSubType&gt;
+               &lt;ord:OrderTypeCode&gt;&lt;/ord:OrderTypeCode&gt;
+               &lt;ord:OrderTypeId>${header.OrderTypeId}&lt;/ord:OrderTypeId&gt;
+               &lt;ord:ParentOrderId>${header.ParentOrderId}&lt;/ord:ParentOrderId&gt;
+               &lt;ord:PayToAccount&gt;&lt;/ord:PayToAccount&gt;
+               &lt;ord:PayToAccountId&gt;&lt;/ord:PayToAccountId&gt;
+               &lt;ord:PayToAccountIntegrationId&gt;&lt;/ord:PayToAccountIntegrationId&gt;
+               &lt;ord:PayToAccountSite&gt;&lt;/ord:PayToAccountSite&gt;
+               &lt;ord:PayToAddressId&gt;&lt;/ord:PayToAddressId&gt;
+               &lt;ord:PayToAddressIntegrationId&gt;&lt;/ord:PayToAddressIntegrationId&gt;
+               &lt;ord:PayToContactId&gt;&lt;/ord:PayToContactId&gt;
+               &lt;ord:PayToContactIntegrationId&gt;&lt;/ord:PayToContactIntegrationId&gt;
+               &lt;ord:PaymentTerm&gt;&lt;/ord:PaymentTerm&gt;
+               &lt;ord:PaymentTermId&gt;&lt;/ord:PaymentTermId&gt;
+               &lt;ord:PaymentTermIntegrationId&gt;&lt;/ord:PaymentTermIntegrationId&gt;
+               &lt;ord:PersonalShipToAddressId&gt;&lt;/ord:PersonalShipToAddressId&gt;
+               &lt;ord:PriceList&gt;&lt;/ord:PriceList&gt;
+               &lt;ord:PriceListId&gt;&lt;/ord:PriceListId&gt;
+               &lt;ord:PriceListIntegrationId&gt;&lt;/ord:PriceListIntegrationId&gt;
+               &lt;ord:PrimaryOrganization&gt;&lt;/ord:PrimaryOrganization&gt;
+               &lt;ord:PrimaryOrganizationId>${header.PrimaryOrganizationId}&lt;/ord:PrimaryOrganizationId&gt;
+               &lt;ord:PrimaryPositionId>${header.PrimaryPositionId}&lt;/ord:PrimaryPositionId&gt;
+               &lt;ord:ProjectId&gt;&lt;/ord:ProjectId&gt;
+               &lt;ord:ProjectIntegrationId&gt;&lt;/ord:ProjectIntegrationId&gt;
+               &lt;ord:ProjectName&gt;&lt;/ord:ProjectName&gt;
+               &lt;ord:PromotionId&gt;&lt;/ord:PromotionId&gt;
+               &lt;ord:QuoteId&gt;&lt;/ord:QuoteId&gt;
+               &lt;ord:QuoteIntegrationId&gt;&lt;/ord:QuoteIntegrationId&gt;
+               &lt;ord:QuoteNumber&gt;&lt;/ord:QuoteNumber&gt;
+               &lt;ord:RequestedDate&gt;&lt;/ord:RequestedDate&gt;
+               &lt;ord:ReturnReason&gt;&lt;/ord:ReturnReason&gt;
+               &lt;ord:ReturnToAccount&gt;&lt;/ord:ReturnToAccount&gt;
+               &lt;ord:ReturnToAccountId>${header.ReturnToAccountId}&lt;/ord:ReturnToAccountId&gt;
+               &lt;ord:ReturnToAccountIntegrationId&gt;&lt;/ord:ReturnToAccountIntegrationId&gt;
+               &lt;ord:ReturnToAccountSite&gt;&lt;/ord:ReturnToAccountSite&gt;
+               &lt;ord:ReturnToAddressId&gt;&lt;/ord:ReturnToAddressId&gt;
+               &lt;ord:ReturnToAddressIntegrationId&gt;&lt;/ord:ReturnToAddressIntegrationId&gt;
+               &lt;ord:ReturnToContactId&gt;&lt;/ord:ReturnToContactId&gt;
+               &lt;ord:ReturnToContactIntegrationId&gt;&lt;/ord:ReturnToContactIntegrationId&gt;
+               &lt;ord:Revision&gt;&lt;/ord:Revision&gt;
+               &lt;ord:ServiceRequestId&gt;&lt;/ord:ServiceRequestId&gt;
+               &lt;ord:ServiceRequestNumber&gt;&lt;/ord:ServiceRequestNumber&gt;
+               &lt;ord:ShipComplete&gt;&lt;/ord:ShipComplete&gt;
+               &lt;ord:ShipInstructions&gt;&lt;/ord:ShipInstructions&gt;
+               &lt;ord:ShipToAccount&gt;&lt;/ord:ShipToAccount&gt;
+               &lt;ord:ShipToAccountId&gt;&lt;/ord:ShipToAccountId&gt;
+               &lt;ord:ShipToAccountIntegrationId&gt;&lt;/ord:ShipToAccountIntegrationId&gt;
+               &lt;ord:ShipToAccountSite&gt;&lt;/ord:ShipToAccountSite&gt;
+               &lt;ord:ShipToAddressId&gt;&lt;/ord:ShipToAddressId&gt;
+               &lt;ord:ShipToAddressIntegrationId&gt;&lt;/ord:ShipToAddressIntegrationId&gt;
+               &lt;ord:ShipToContactId&gt;&lt;/ord:ShipToContactId&gt;
+               &lt;ord:ShipToContactIntegrationId&gt;&lt;/ord:ShipToContactIntegrationId&gt;
+               &lt;ord:CarrierPriority&gt;&lt;/ord:CarrierPriority&gt;
+               &lt;ord:SourceInventoryLocationId>${header.SourceInventoryLocationId}&lt;/ord:SourceInventoryLocationId&gt;
+               &lt;ord:SourceInventoryLocationIntegrationId&gt;&lt;/ord:SourceInventoryLocationIntegrationId&gt;
+               &lt;ord:SourceInventoryLocation&gt;&lt;/ord:SourceInventoryLocation&gt;
+               &lt;ord:Status>${header.Status}&lt;/ord:Status&gt;
+               &lt;ord:SubmitDate&gt;&lt;/ord:SubmitDate&gt;
+               &lt;ord:TaxAmount&gt;&lt;/ord:TaxAmount&gt;
+               &lt;ord:TaxExempt&gt;&lt;/ord:TaxExempt&gt;
+               &lt;ord:TaxExemptId&gt;&lt;/ord:TaxExemptId&gt;
+               &lt;ord:TaxExemptCode&gt;&lt;/ord:TaxExemptCode&gt;
+               &lt;ord:TaxRate&gt;&lt;/ord:TaxRate&gt;
+               &lt;ord:TotalVolume&gt;&lt;/ord:TotalVolume&gt;
+               &lt;ord:TotalVolumeUoM&gt;&lt;/ord:TotalVolumeUoM&gt;
+               &lt;ord:TotalWeight&gt;&lt;/ord:TotalWeight&gt;
+               &lt;ord:TotalWeightUoM&gt;&lt;/ord:TotalWeightUoM&gt;
+               &lt;ord:OpportunityIntegrationId&gt;&lt;/ord:OpportunityIntegrationId&gt;
+               &lt;ord:TMPCFinancedBy&gt;&lt;/ord:TMPCFinancedBy&gt;
+               &lt;ord:TMJobCardClosedDate&gt;&lt;/ord:TMJobCardClosedDate&gt;
+               &lt;ord:TMSRAssetNumber&gt;&lt;/ord:TMSRAssetNumber&gt;
+               &lt;ord:TMAssetNumber&gt;&lt;/ord:TMAssetNumber&gt;
+               &lt;ord:TMDivisionId&gt;&lt;/ord:TMDivisionId&gt;
+               &lt;ord:ExpectedDeliveryDate&gt;&lt;/ord:ExpectedDeliveryDate&gt;
+               &lt;ord:PortalUserId&gt;&lt;/ord:PortalUserId&gt;
+               &lt;ord:RelatedOrderNumber&gt;&lt;/ord:RelatedOrderNumber&gt;
+               &lt;ord:PortalBenificiaryDetails&gt;&lt;/ord:PortalBenificiaryDetails&gt;
+               &lt;ord:TotalPaymentsEntered&gt;&lt;/ord:TotalPaymentsEntered&gt;
+               &lt;ord:OrderTotal&gt;&lt;/ord:OrderTotal&gt;
+               &lt;ord:BalancePayment&gt;&lt;/ord:BalancePayment&gt;
+               &lt;ord:TMApplicationName&gt;&lt;/ord:TMApplicationName&gt;
+               &lt;ord:TMPCSoldToAccountId&gt;&lt;/ord:TMPCSoldToAccountId&gt;
+               &lt;ord:ProductType&gt;&lt;/ord:ProductType&gt;
+               &lt;ord:QuoteStatus&gt;&lt;/ord:QuoteStatus&gt;
+               &lt;ord:TMNoPAN&gt;&lt;/ord:TMNoPAN&gt;
+               &lt;ord:OrderPINNumber&gt;&lt;/ord:OrderPINNumber&gt;
+               &lt;ord:TMChannel>${header.TMChannel}&lt;/ord:TMChannel&gt;
+               &lt;ord:OTCAccountId&gt;&lt;/ord:OTCAccountId&gt;
+               &lt;ord:TMSparesOrderType>${header.TMSparesOrderType}&lt;/ord:TMSparesOrderType&gt;
+               &lt;ord:TMOrderReason>${header.TMOrderReason}&lt;/ord:TMOrderReason&gt;
+               &lt;ord:TMOTCExpirydate>${header.TMOTCExpirydate}&lt;/ord:TMOTCExpirydate&gt;
+               &lt;ord:TMOrderConfirmationNo&gt;&lt;/ord:TMOrderConfirmationNo&gt;
+               &lt;ord:TMGSTIN>${header.TMGSTIN}&lt;/ord:TMGSTIN&gt;
+               &lt;ord:ListOfRelatedShipment&gt;
+                  &lt;ord:RelatedShipment&gt;
+                           &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                           &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                           &lt;ord:ShipmentNumber&gt;&lt;/ord:ShipmentNumber&gt;
+                  &lt;/ord:RelatedShipment&gt;
+               &lt;/ord:ListOfRelatedShipment&gt;
+               &lt;ord:ListOfLineItems&gt;
+                  &lt;ord:LineItems operation="">
+                           &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                           &lt;ord:AvailableStatus&gt;&lt;/ord:AvailableStatus&gt;
+                           &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
+                           &lt;ord:ActionCode&gt;&lt;/ord:ActionCode&gt;
+                           &lt;ord:StartPrice&gt;&lt;/ord:StartPrice&gt;
+                           &lt;ord:StatusAsOfDate&gt;&lt;/ord:StatusAsOfDate&gt;
+                           &lt;ord:AssetId&gt;&lt;/ord:AssetId&gt;
+                           &lt;ord:AssetIntegrationId&gt;&lt;/ord:AssetIntegrationId&gt;
+                           &lt;ord:AssetNumber&gt;&lt;/ord:AssetNumber&gt;
+                           &lt;ord:AvailableDate&gt;&lt;/ord:AvailableDate&gt;
+                           &lt;ord:AvailableQuantity&gt;&lt;/ord:AvailableQuantity&gt;
+                           &lt;ord:IntegrationStatus&gt;&lt;/ord:IntegrationStatus&gt;
+                           &lt;ord:BasePrice&gt;&lt;/ord:BasePrice&gt;
+                           &lt;ord:BillableFlag&gt;&lt;/ord:BillableFlag&gt;
+                           &lt;ord:TMProduct>${header.TMProduct}&lt;/ord:TMProduct&gt;
+                           &lt;ord:TMExcludePricingFlag&gt;&lt;/ord:TMExcludePricingFlag&gt;
+                           &lt;ord:TMCurrencyCode&gt;&lt;/ord:TMCurrencyCode&gt;
+                           &lt;ord:TMExchangeDate&gt;&lt;/ord:TMExchangeDate&gt;
+                           &lt;ord:TMSalesServiceFlag&gt;&lt;/ord:TMSalesServiceFlag&gt;
+                           &lt;ord:UnitPrice&gt;&lt;/ord:UnitPrice&gt;
+                           &lt;ord:ShippingCarrier&gt;&lt;/ord:ShippingCarrier&gt;
+                           &lt;ord:Description2&gt;&lt;/ord:Description2&gt;
+                           &lt;ord:DestinationInventoryLocationId&gt;&lt;/ord:DestinationInventoryLocationId&gt;
+                           &lt;ord:DestinationInventoryLocation&gt;&lt;/ord:DestinationInventoryLocation&gt;
+                           &lt;ord:DestinationInventoryLocationIntegrationId&gt;&lt;/ord:DestinationInventoryLocationIntegrationId&gt;
+                           &lt;ord:DiscountAmount&gt;&lt;/ord:DiscountAmount&gt;
+                           &lt;ord:DiscountPercent&gt;&lt;/ord:DiscountPercent&gt;
+                           &lt;ord:PackageNameOutbound&gt;&lt;/ord:PackageNameOutbound&gt;
+                           &lt;ord:RequestedDate&gt;&lt;/ord:RequestedDate&gt;
+                           &lt;ord:IntegrationStatusAsOfDate&gt;&lt;/ord:IntegrationStatusAsOfDate&gt;
+                           &lt;ord:ShippingCharges&gt;&lt;/ord:ShippingCharges&gt;
+                           &lt;ord:ShippingTerms&gt;&lt;/ord:ShippingTerms&gt;
+                           &lt;ord:Weight&gt;&lt;/ord:Weight&gt;
+                           &lt;ord:WeightUnitofMeasure&gt;&lt;/ord:WeightUnitofMeasure&gt;
+                           &lt;ord:HoldFlag&gt;&lt;/ord:HoldFlag&gt;
+                           &lt;ord:HoldReason&gt;&lt;/ord:HoldReason&gt;
+                           &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                           &lt;ord:LineNumber&gt;&lt;/ord:LineNumber&gt;
+                           &lt;ord:LoanerFlag&gt;&lt;/ord:LoanerFlag&gt;
+                           &lt;ord:Note&gt;&lt;/ord:Note&gt;
+                           &lt;ord:OrderHeaderId&gt;&lt;/ord:OrderHeaderId&gt;
+                           &lt;ord:OrderNumber&gt;&lt;/ord:OrderNumber&gt;
+                           &lt;ord:PackageNameInbound&gt;&lt;/ord:PackageNameInbound&gt;
+                           &lt;ord:ParentOrderItemId&gt;&lt;/ord:ParentOrderItemId&gt;
+                           &lt;ord:PartNumber>${header.PartNumber}&lt;/ord:PartNumber&gt;
+                           &lt;ord:ProductName&gt;&lt;/ord:ProductName&gt;
+                           &lt;ord:ProductId&gt;&lt;/ord:ProductId&gt;
+                           &lt;ord:ProductIntegrationId&gt;&lt;/ord:ProductIntegrationId&gt;
+                           &lt;ord:RequestedQuantity>${header.RequestedQuantity}&lt;/ord:RequestedQuantity&gt;
+                           &lt;ord:ShipQuantity&gt;&lt;/ord:ShipQuantity&gt;
+                           &lt;ord:ReturnToAccountName&gt;&lt;/ord:ReturnToAccountName&gt;
+                           &lt;ord:ReturnToAccountId&gt;&lt;/ord:ReturnToAccountId&gt;
+                           &lt;ord:ReturnToAccountIntegrationId&gt;&lt;/ord:ReturnToAccountIntegrationId&gt;
+                           &lt;ord:ReturnToAccountSite&gt;&lt;/ord:ReturnToAccountSite&gt;
+                           &lt;ord:ReturnToAddressId&gt;&lt;/ord:ReturnToAddressId&gt;
+                           &lt;ord:ReturnToAddressIntegrationId&gt;&lt;/ord:ReturnToAddressIntegrationId&gt;
+                           &lt;ord:ReturnToContactId&gt;&lt;/ord:ReturnToContactId&gt;
+                           &lt;ord:ReturnToContactIntegrationId&gt;&lt;/ord:ReturnToContactIntegrationId&gt;
+                           &lt;ord:RootOrderItemId&gt;&lt;/ord:RootOrderItemId&gt;
+                           &lt;ord:ShipDate&gt;&lt;/ord:ShipDate&gt;
+                           &lt;ord:ShipInstruction&gt;&lt;/ord:ShipInstruction&gt;
+                           &lt;ord:ShipToAccount&gt;&lt;/ord:ShipToAccount&gt;
+                           &lt;ord:ShipToAccountId&gt;&lt;/ord:ShipToAccountId&gt;
+                           &lt;ord:ShipToAccountIntegrationId&gt;&lt;/ord:ShipToAccountIntegrationId&gt;
+                           &lt;ord:ReturnToFirstName&gt;&lt;/ord:ReturnToFirstName&gt;
+                           &lt;ord:ReturnToLastName&gt;&lt;/ord:ReturnToLastName&gt;
+                           &lt;ord:ShipToContact-FirstName&gt;&lt;/ord:ShipToContact-FirstName&gt;
+                           &lt;ord:ShipToContact-LastName&gt;&lt;/ord:ShipToContact-LastName&gt;
+                           &lt;ord:ShipToAddressId&gt;&lt;/ord:ShipToAddressId&gt;
+                           &lt;ord:ShipToContactId&gt;&lt;/ord:ShipToContactId&gt;
+                           &lt;ord:ShipToContactIntegrationId&gt;&lt;/ord:ShipToContactIntegrationId&gt;
+                           &lt;ord:ShiptoAddressIntegrationId&gt;&lt;/ord:ShiptoAddressIntegrationId&gt;
+                           &lt;ord:SiingleDelivery&gt;&lt;/ord:SiingleDelivery&gt;
+                           &lt;ord:SmartPartNumber&gt;&lt;/ord:SmartPartNumber&gt;
+                           &lt;ord:SourceInventoryLocationId&gt;&lt;/ord:SourceInventoryLocationId&gt;
+                           &lt;ord:SourceInventoryLocationIntegrationId&gt;&lt;/ord:SourceInventoryLocationIntegrationId&gt;
+                           &lt;ord:SourceInventoryLocation&gt;&lt;/ord:SourceInventoryLocation&gt;
+                           &lt;ord:Status&gt;&lt;/ord:Status&gt;
+                           &lt;ord:TaxAmount&gt;&lt;/ord:TaxAmount&gt;
+                           &lt;ord:TMTaxName&gt;&lt;/ord:TMTaxName&gt;
+                           &lt;ord:UnitofMeasure&gt;&lt;/ord:UnitofMeasure&gt;
+                           &lt;ord:Volume&gt;&lt;/ord:Volume&gt;
+                           &lt;ord:VolumeUnitofMeasure&gt;&lt;/ord:VolumeUnitofMeasure&gt;
+                           &lt;ord:ShipToAccountSite&gt;&lt;/ord:ShipToAccountSite&gt;
+                           &lt;ord:AdjustedListPriceDisplay&gt;&lt;/ord:AdjustedListPriceDisplay&gt;
+                           &lt;ord:DiscountAmountDisplay&gt;&lt;/ord:DiscountAmountDisplay&gt;
+                           &lt;ord:DiscountPercentDisplay&gt;&lt;/ord:DiscountPercentDisplay&gt;
+                           &lt;ord:LineTotal&gt;&lt;/ord:LineTotal&gt;
+                           &lt;ord:MR&gt;&lt;/ord:MR&gt;
+                           &lt;ord:MinimumQuantity&gt;&lt;/ord:MinimumQuantity&gt;
+                           &lt;ord:ProductDescription&gt;&lt;/ord:ProductDescription&gt;
+                           &lt;ord:TMSRActionTaken&gt;&lt;/ord:TMSRActionTaken&gt;
+                           &lt;ord:ConvenienceCharge&gt;&lt;/ord:ConvenienceCharge&gt;
+                           &lt;ord:TMPCAMCContractPeriod&gt;&lt;/ord:TMPCAMCContractPeriod&gt;
+                           &lt;ord:TMPCAMCEnqContractKM&gt;&lt;/ord:TMPCAMCEnqContractKM&gt;
+                           &lt;ord:TMPCAMCType&gt;&lt;/ord:TMPCAMCType&gt;
+                           &lt;ord:ListOfPromisedScheduleLines&gt;
+                              &lt;ord:PromisedScheduleLines operation="">
+                                       &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                                       &lt;ord:AvailableStatus&gt;&lt;/ord:AvailableStatus&gt;
+                                       &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
+                                       &lt;ord:PromisedDate&gt;&lt;/ord:PromisedDate&gt;
+                                       &lt;ord:PromisedQuantity&gt;&lt;/ord:PromisedQuantity&gt;
+                                       &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                                       &lt;ord:LineItemActionNumber&gt;&lt;/ord:LineItemActionNumber&gt;
+                                       &lt;ord:OrderItemId&gt;&lt;/ord:OrderItemId&gt;
+                                       &lt;ord:OrderItemIntegrationId&gt;&lt;/ord:OrderItemIntegrationId&gt;
+                                       &lt;ord:PartNumber&gt;&lt;/ord:PartNumber&gt;
+                                       &lt;ord:ProductId&gt;&lt;/ord:ProductId&gt;
+                                       &lt;ord:ProductIntegrationId&gt;&lt;/ord:ProductIntegrationId&gt;
+                                       &lt;ord:ProductName&gt;&lt;/ord:ProductName&gt;
+                                       &lt;ord:SourceInventoryLocation&gt;&lt;/ord:SourceInventoryLocation&gt;
+                                       &lt;ord:SourceInventoryLocationId&gt;&lt;/ord:SourceInventoryLocationId&gt;
+                                       &lt;ord:SourceInventoryLocationIntegrationId&gt;&lt;/ord:SourceInventoryLocationIntegrationId&gt;
+                        &lt;/ord:PromisedScheduleLines&gt;
+                     &lt;/ord:ListOfPromisedScheduleLines&gt;
+                           &lt;ord:ListOfRequestedScheduleLines&gt;
+                              &lt;ord:RequestedScheduleLines operation="">
+                                       &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                                       &lt;ord:LineNumber&gt;&lt;/ord:LineNumber&gt;
+                                       &lt;ord:OrderItemId&gt;&lt;/ord:OrderItemId&gt;
+                                       &lt;ord:RequestedDate&gt;&lt;/ord:RequestedDate&gt;
+                                       &lt;ord:RequestedQuantity&gt;&lt;/ord:RequestedQuantity&gt;
+                                       &lt;ord:SourceInventoryLocation&gt;&lt;/ord:SourceInventoryLocation&gt;
+                                       &lt;ord:SourceInventoryLocationId&gt;&lt;/ord:SourceInventoryLocationId&gt;
+                                       &lt;ord:SourceInventoryLocationIntegrationId&gt;&lt;/ord:SourceInventoryLocationIntegrationId&gt;
+                                       &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                        &lt;/ord:RequestedScheduleLines&gt;
+                     &lt;/ord:ListOfRequestedScheduleLines&gt;
+                           &lt;ord:ListOfAttributes&gt;
+                              &lt;ord:Attributes operation="">
+                                       &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                                       &lt;ord:ActionCode&gt;&lt;/ord:ActionCode&gt;
+                                       &lt;ord:AttributeId&gt;&lt;/ord:AttributeId&gt;
+                                       &lt;ord:DataType&gt;&lt;/ord:DataType&gt;
+                                       &lt;ord:Description&gt;&lt;/ord:Description&gt;
+                                       &lt;ord:Hidden&gt;&lt;/ord:Hidden&gt;
+                                       &lt;ord:ListOfValueType&gt;&lt;/ord:ListOfValueType&gt;
+                                       &lt;ord:Name&gt;&lt;/ord:Name&gt;
+                                       &lt;ord:ObjectId&gt;&lt;/ord:ObjectId&gt;
+                                       &lt;ord:ReadOnly&gt;&lt;/ord:ReadOnly&gt;
+                                       &lt;ord:Required&gt;&lt;/ord:Required&gt;
+                                       &lt;ord:Sequence&gt;&lt;/ord:Sequence&gt;
+                                       &lt;ord:Validation&gt;&lt;/ord:Validation&gt;
+                                       &lt;ord:Value&gt;&lt;/ord:Value&gt;
+                                       &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                        &lt;/ord:Attributes&gt;
+                     &lt;/ord:ListOfAttributes&gt;
+                  &lt;/ord:LineItems&gt;
+               &lt;/ord:ListOfLineItems&gt;
+               &lt;ord:ListOfRelatedOrganization&gt;
+                  &lt;ord:RelatedOrganization IsPrimaryMVG="">
+                           &lt;ord:Organization>${header.Organization}&lt;/ord:Organization&gt;
+                           &lt;ord:OrganizationId&gt;&lt;/ord:OrganizationId&gt;
+                           &lt;ord:IntegrationId>${header.LineItemsIntegrationId}&lt;/ord:IntegrationId&gt;
+                  &lt;/ord:RelatedOrganization&gt;
+               &lt;/ord:ListOfRelatedOrganization&gt;
+               &lt;ord:ListOfRelatedSalesRep&gt;
+                  &lt;ord:RelatedSalesRep IsPrimaryMVG="">
+                           &lt;ord:Login&gt;&lt;/ord:Login&gt;
+                           &lt;ord:Id>${header.RelatedSalesRepId}&lt;/ord:Id&gt;
+                           &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                           &lt;ord:Position>${header.Position}&lt;/ord:Position&gt;
+                  &lt;/ord:RelatedSalesRep&gt;
+               &lt;/ord:ListOfRelatedSalesRep&gt;
+               &lt;ord:ListOfPayments&gt;
+                  &lt;ord:Payments operation="">
+                           &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                           &lt;ord:AccountNumber&gt;&lt;/ord:AccountNumber&gt;
+                           &lt;ord:AuthorizationCode&gt;&lt;/ord:AuthorizationCode&gt;
+                           &lt;ord:AuthorizationDate&gt;&lt;/ord:AuthorizationDate&gt;
+                           &lt;ord:BillToAddressId&gt;&lt;/ord:BillToAddressId&gt;
+                           &lt;ord:BillToAddressIntegrationId&gt;&lt;/ord:BillToAddressIntegrationId&gt;
+                           &lt;ord:CardHolder&gt;&lt;/ord:CardHolder&gt;
+                           &lt;ord:CreditCheckMessage&gt;&lt;/ord:CreditCheckMessage&gt;
+                           &lt;ord:CreditCheckStatus&gt;&lt;/ord:CreditCheckStatus&gt;
+                           &lt;ord:CreditCheckStatusAsOfDate&gt;&lt;/ord:CreditCheckStatusAsOfDate&gt;
+                           &lt;ord:CreditCardExpirationMonth&gt;&lt;/ord:CreditCardExpirationMonth&gt;
+                           &lt;ord:IssuingBankCustomerId&gt;&lt;/ord:IssuingBankCustomerId&gt;
+                           &lt;ord:IssuingBankName&gt;&lt;/ord:IssuingBankName&gt;
+                           &lt;ord:IssuingBankPhoneNumber&gt;&lt;/ord:IssuingBankPhoneNumber&gt;
+                           &lt;ord:MerchantId&gt;&lt;/ord:MerchantId&gt;
+                           &lt;ord:Payment&gt;&lt;/ord:Payment&gt;
+                           &lt;ord:PaymentAccountId&gt;&lt;/ord:PaymentAccountId&gt;
+                           &lt;ord:PaymentAccountName&gt;&lt;/ord:PaymentAccountName&gt;
+                           &lt;ord:PaymentAccountSite&gt;&lt;/ord:PaymentAccountSite&gt;
+                           &lt;ord:PaymentMethod&gt;&lt;/ord:PaymentMethod&gt;
+                           &lt;ord:PaymentStatus&gt;&lt;/ord:PaymentStatus&gt;
+                           &lt;ord:PaymentStatusAsOfDate&gt;&lt;/ord:PaymentStatusAsOfDate&gt;
+                           &lt;ord:PaymentType&gt;&lt;/ord:PaymentType&gt;
+                           &lt;ord:SocialSecurityNumber&gt;&lt;/ord:SocialSecurityNumber&gt;
+                           &lt;ord:TransactionAmount&gt;&lt;/ord:TransactionAmount&gt;
+                           &lt;ord:VerificationNumber&gt;&lt;/ord:VerificationNumber&gt;
+                           &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                           &lt;ord:PaymentAccountIntegrationId&gt;&lt;/ord:PaymentAccountIntegrationId&gt;
+                           &lt;ord:CreditCardExpirationYear&gt;&lt;/ord:CreditCardExpirationYear&gt;
+                           &lt;ord:CheckMailingAddress&gt;&lt;/ord:CheckMailingAddress&gt;
+                           &lt;ord:BankRoutingNumber&gt;&lt;/ord:BankRoutingNumber&gt;
+                           &lt;ord:ContactName&gt;&lt;/ord:ContactName&gt;
+                           &lt;ord:PaymentComments&gt;&lt;/ord:PaymentComments&gt;
+                           &lt;ord:TMCVDealerReceiptDate&gt;&lt;/ord:TMCVDealerReceiptDate&gt;
+                           &lt;ord:ApprovalDate&gt;&lt;/ord:ApprovalDate&gt;
+                           &lt;ord:TMPaymentDate&gt;&lt;/ord:TMPaymentDate&gt;
+                           &lt;ord:TMDealerDisplayName&gt;&lt;/ord:TMDealerDisplayName&gt;
+                           &lt;ord:TMCVPaymentAmount&gt;&lt;/ord:TMCVPaymentAmount&gt;
+                           &lt;ord:TMCancellationReason&gt;&lt;/ord:TMCancellationReason&gt;
+                           &lt;ord:TMPaymentRealization&gt;&lt;/ord:TMPaymentRealization&gt;
+                           &lt;ord:TMPaymentType&gt;&lt;/ord:TMPaymentType&gt;
+                           &lt;ord:TMCVChequeDDNo&gt;&lt;/ord:TMCVChequeDDNo&gt;
+                           &lt;ord:TMCVBranchName&gt;&lt;/ord:TMCVBranchName&gt;
+                           &lt;ord:TMCVBankName&gt;&lt;/ord:TMCVBankName&gt;
+                           &lt;ord:TMDepositedOnBank&gt;&lt;/ord:TMDepositedOnBank&gt;
+                           &lt;ord:TMCVDealerReceiptNumber&gt;&lt;/ord:TMCVDealerReceiptNumber&gt;
+                           &lt;ord:TMPaymentBalanceAmount&gt;&lt;/ord:TMPaymentBalanceAmount&gt;
+                           &lt;ord:DesiredPayDate&gt;&lt;/ord:DesiredPayDate&gt;
+                           &lt;ord:OrderId&gt;&lt;/ord:OrderId&gt;
+                           &lt;ord:TMPaymentOrgId&gt;&lt;/ord:TMPaymentOrgId&gt;
+                           &lt;ord:Description&gt;&lt;/ord:Description&gt;
+                           &lt;ord:PortalUserId&gt;&lt;/ord:PortalUserId&gt;
+                           &lt;ord:PortalBillDeskRefNo&gt;&lt;/ord:PortalBillDeskRefNo&gt;
+                           &lt;ord:PortalTransactionRefNo&gt;&lt;/ord:PortalTransactionRefNo&gt;
+                           &lt;ord:TMPaymentSettledFlag&gt;&lt;/ord:TMPaymentSettledFlag&gt;
+                  &lt;/ord:Payments&gt;
+               &lt;/ord:ListOfPayments&gt;
+               &lt;ord:ListOfTMAction&gt;
+                  &lt;ord:TMAction operation="">
+                           &lt;ord:Id&gt;&lt;/ord:Id&gt;
+                           &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
+                           &lt;ord:TMInvoiceAmount&gt;&lt;/ord:TMInvoiceAmount&gt;
+                           &lt;ord:TMJobBillingEmployee&gt;&lt;/ord:TMJobBillingEmployee&gt;
+                           &lt;ord:TMJobCodeDesc&gt;&lt;/ord:TMJobCodeDesc&gt;
+                           &lt;ord:TMJobCodePicked&gt;&lt;/ord:TMJobCodePicked&gt;
+                           &lt;ord:TMLineItemDiscount&gt;&lt;/ord:TMLineItemDiscount&gt;
+                           &lt;ord:TMLineItemExtraCharge&gt;&lt;/ord:TMLineItemExtraCharge&gt;
+                           &lt;ord:TMParentProductLineName&gt;&lt;/ord:TMParentProductLineName&gt;
+                           &lt;ord:TMTotalJobPrice&gt;&lt;/ord:TMTotalJobPrice&gt;
+                  &lt;/ord:TMAction&gt;
+               &lt;/ord:ListOfTMAction&gt;
+               &lt;ord:ListOfRelatedOrderType&gt;
+                  &lt;ord:RelatedOrderType&gt;
+                           &lt;ord:OrderType&gt;&lt;/ord:OrderType&gt;
+                           &lt;ord:OrderTypeCode&gt;&lt;/ord:OrderTypeCode&gt;
+                  &lt;/ord:RelatedOrderType&gt;
+               &lt;/ord:ListOfRelatedOrderType&gt;
+            &lt;/ord:Orders&gt;
+         &lt;/ord:ListOfOrderInterface&gt;
+         &lt;asi:StatusObject&gt;&lt;/asi:StatusObject&gt;
+      &lt;/asi:TMCVCPOTCOrderInsertOrUpdate_Input&gt;
+   &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+            	</simple>
+            </setBody>
+	<log id="_log1" message="******** REQUEST BODY ********* ${body}"/>
+    <to id="_to3" pattern="InOut" uri="cxf:bean:rsAPI"/>
+        </route>
+    </camelContext>
+</beans>

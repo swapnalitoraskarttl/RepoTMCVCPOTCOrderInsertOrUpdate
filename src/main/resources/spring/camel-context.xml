@@ -3,14 +3,12 @@
     xmlns:cxf="http://camel.apache.org/schema/cxf"
     xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="          http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans.xsd            http://camel.apache.org/schema/cxf           http://camel.apache.org/schema/cxf/camel-cxf.xsd                http://camel.apache.org/schema/spring                 http://camel.apache.org/schema/spring/camel-spring.xsd                http://cxf.apache.org/transports/http/configuration     http://cxf.apache.org/schemas/configuration/http-conf.xsd">
-   
     <cxf:cxfEndpoint
         address="http://localhost:8099/TMCVCPOTCOrderInsertOrUpdate" id="CRP_API">
         <cxf:properties>
             <entry key="dataFormat" value="MESSAGE"/>
         </cxf:properties>
     </cxf:cxfEndpoint>
-    
     <cxf:cxfEndpoint
         address="http://172.24.47.117//eai_secure_enu/start.swe?SWEExtSource=SecureWebService&amp;SWEExtCmd=Execute"
         id="rsAPI" wsdlURL="CPPUROrderCRM.wsdl">
@@ -18,13 +16,13 @@
             <entry key="dataFormat" value="MESSAGE"/>
         </cxf:properties>
     </cxf:cxfEndpoint>
-    
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asi="http://siebel.com/asi/" xmlns:ord="http://www.siebel.com/xml/Order%20Interface">
-        
+    <camelContext id="camel"
+        xmlns="http://camel.apache.org/schema/spring"
+        xmlns:asi="http://siebel.com/asi/"
+        xmlns:ord="http://www.siebel.com/xml/Order%20Interface" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <route id="simple-route">
             <from id="_from1" uri="cxf:bean:CRP_API?loggingFeatureEnabled=true"/>
-
-			<setHeader headerName="OrderType" id="OrderType">
+            <setHeader headerName="OrderType" id="OrderType">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:OrderType/text()</xpath>
             </setHeader>
             <setHeader headerName="OrderTypeId" id="OrderTypeId">
@@ -43,7 +41,7 @@
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMPCRaisedBy/text()</xpath>
             </setHeader>
             <setHeader headerName="ParentOrderId" id="ParentOrderId">
-               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ParentOrderId/text()</xpath>
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ParentOrderId/text()</xpath>
             </setHeader>
             <setHeader headerName="IntegrationId" id="IntegrationId">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:IntegrationId/text()</xpath>
@@ -72,10 +70,10 @@
             <setHeader headerName="Status" id="Status">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:Status/text()</xpath>
             </setHeader>
-             <setHeader headerName="AccountId" id="AccountId">
+            <setHeader headerName="AccountId" id="AccountId">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:AccountId/text()</xpath>
             </setHeader>
-             <setHeader headerName="RelatedSalesRepId" id="RelatedSalesRepId">
+            <setHeader headerName="RelatedSalesRepId" id="RelatedSalesRepId">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfRelatedSalesRep/ord:RelatedSalesRep/ord:Id/text()</xpath>
             </setHeader>
             <setHeader headerName="Position" id="Position">
@@ -86,12 +84,12 @@
             </setHeader>
             <setHeader headerName="PartNumber" id="PartNumber">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:PartNumber/text()</xpath>
-             </setHeader>
+            </setHeader>
             <setHeader headerName="RequestedQuantity" id="RequestedQuantity">
-               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:RequestedQuantity/text()</xpath>
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:RequestedQuantity/text()</xpath>
             </setHeader>
             <setHeader headerName="LineItemsIntegrationId" id="LineItemsIntegrationId">
-               <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:IntegrationId/text()</xpath>
+                <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:ListOfLineItems/ord:LineItems/ord:IntegrationId/text()</xpath>
             </setHeader>
             <setHeader headerName="TMChannel" id="TMChannel">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMChannel/text()</xpath>
@@ -99,7 +97,6 @@
             <setHeader headerName="TMGSTIN" id="TMGSTIN">
                 <xpath>//asi:TMCVCPOTCOrderInsertOrUpdate_Input/ord:ListOfOrderInterface/ord:Orders/ord:TMGSTIN/text()</xpath>
             </setHeader>
-            
             <setHeader headerName="Content-Type" id="_setHeader41">
                 <constant>application/xml</constant>
             </setHeader>
@@ -109,16 +106,22 @@
             <setHeader headerName="Authorization" id="_setHeader2">
                 <simple>Basic Vk1BMDcxMzQ6VEFUQTIwMTU=</simple>
             </setHeader>
-            
             <setBody id="route-setBodyCRM">
-            	<simple>
-            		&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asi="http://siebel.com/asi/" xmlns:ord="http://www.siebel.com/xml/Order%20Interface">
-   &lt;soapenv:Header/>
+                <simple>
+            		&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asi="http://siebel.com/asi/" xmlns:ord="http://www.siebel.com/xml/Order%20Interface"&gt;
+    &lt;soapenv:Header&gt;
+      &lt;wsse:Security xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/07/secext"&gt;
+         &lt;wsse:UsernameToken xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"&gt;
+            &lt;wsse:Username>TMCVPRDADMIN&lt;/wsse:Username&gt;
+            &lt;wsse:Password Type="wsse:PasswordText">stmcvprdadmin&lt;/wsse:Password&gt;
+         &lt;/wsse:UsernameToken&gt;
+      &lt;/wsse:Security&gt;
+&lt;/soapenv:Header&gt;
    &lt;soapenv:Body&gt;
       &lt;asi:TMCVCPOTCOrderInsertOrUpdate_Input&gt;
          &lt;ord:ListOfOrderInterface&gt;
-            &lt;!--Zero or more repetitions:-->
-            &lt;ord:Orders operation="">
+            &lt;!--Zero or more repetitions:--&gt;
+            &lt;ord:Orders operation=""&gt;
                &lt;ord:ParentProductLine&gt;&lt;/ord:ParentProductLine&gt;
                &lt;ord:ProductAMC&gt;&lt;/ord:ProductAMC&gt;
                &lt;ord:Product&gt;&lt;/ord:Product&gt;
@@ -128,7 +131,7 @@
                &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
                &lt;ord:Account&gt;&lt;/ord:Account&gt;
                &lt;ord:CustomerSegment&gt;&lt;/ord:CustomerSegment&gt;
-               &lt;ord:AccountId>${header.AccountId}&lt;/ord:AccountId&gt;
+               &lt;ord:AccountId&gt;${header.AccountId}&lt;/ord:AccountId&gt;
                &lt;ord:AccountIntegrationId&gt;&lt;/ord:AccountIntegrationId&gt;
                &lt;ord:AccountSite&gt;&lt;/ord:AccountSite&gt;
                &lt;ord:PurchaseOrderNumber&gt;&lt;/ord:PurchaseOrderNumber&gt;
@@ -174,17 +177,17 @@
                &lt;ord:TMOrderCategory&gt;&lt;/ord:TMOrderCategory&gt;
                &lt;ord:TMDealerState&gt;&lt;/ord:TMDealerState&gt;
                &lt;ord:TMDivisionName&gt;&lt;/ord:TMDivisionName&gt;
-               &lt;ord:TMPCRaisedBy>${header.TMPCRaisedBy}&lt;/ord:TMPCRaisedBy&gt;
+               &lt;ord:TMPCRaisedBy&gt;${header.TMPCRaisedBy}&lt;/ord:TMPCRaisedBy&gt;
                &lt;ord:TMInvoiceFormatDiv&gt;&lt;/ord:TMInvoiceFormatDiv&gt;
                &lt;ord:TMOrderPaymentType&gt;&lt;/ord:TMOrderPaymentType&gt;
                &lt;ord:TMPCOrderTypeVC&gt;&lt;/ord:TMPCOrderTypeVC&gt;
                &lt;ord:TMFinalInvoiceAmount&gt;&lt;/ord:TMFinalInvoiceAmount&gt;
                &lt;ord:TMOtherChargeAmount&gt;&lt;/ord:TMOtherChargeAmount&gt;
-               &lt;ord:TMPurchaseOrder>${header.TMPurchaseOrder}&lt;/ord:TMPurchaseOrder&gt;
+               &lt;ord:TMPurchaseOrder&gt;${header.TMPurchaseOrder}&lt;/ord:TMPurchaseOrder&gt;
                &lt;ord:TMOtherChargePercent&gt;&lt;/ord:TMOtherChargePercent&gt;
                &lt;ord:TMSumLineItemLineTotal&gt;&lt;/ord:TMSumLineItemLineTotal&gt;
                &lt;ord:CurrencyCode&gt;&lt;/ord:CurrencyCode&gt;
-               &lt;ord:OrderType>${header.OrderType}&lt;/ord:OrderType&gt;
+               &lt;ord:OrderType&gt;${header.OrderType}&lt;/ord:OrderType&gt;
                &lt;ord:HoldReason&gt;&lt;/ord:HoldReason&gt;
                &lt;ord:Description&gt;&lt;/ord:Description&gt;
                &lt;ord:DestinationInventoryLocationId&gt;&lt;/ord:DestinationInventoryLocationId&gt;
@@ -197,16 +200,16 @@
                &lt;ord:ShippingCharges&gt;&lt;/ord:ShippingCharges&gt;
                &lt;ord:ShippingTerms&gt;&lt;/ord:ShippingTerms&gt;
                &lt;ord:HoldFlag&gt;&lt;/ord:HoldFlag&gt;
-               &lt;ord:IntegrationId>${header.IntegrationId}&lt;/ord:IntegrationId&gt;
+               &lt;ord:IntegrationId&gt;${header.IntegrationId}&lt;/ord:IntegrationId&gt;
                &lt;ord:OpportunityName&gt;&lt;/ord:OpportunityName&gt;
                &lt;ord:OpportunityId&gt;&lt;/ord:OpportunityId&gt;
                &lt;ord:OrderDate&gt;&lt;/ord:OrderDate&gt;
                &lt;ord:OrderNumber&gt;&lt;/ord:OrderNumber&gt;
                &lt;ord:OrderPriority&gt;&lt;/ord:OrderPriority&gt;
-               &lt;ord:OrderSubType>${header.OrderSubType}&lt;/ord:OrderSubType&gt;
+               &lt;ord:OrderSubType&gt;${header.OrderSubType}&lt;/ord:OrderSubType&gt;
                &lt;ord:OrderTypeCode&gt;&lt;/ord:OrderTypeCode&gt;
-               &lt;ord:OrderTypeId>${header.OrderTypeId}&lt;/ord:OrderTypeId&gt;
-               &lt;ord:ParentOrderId>${header.ParentOrderId}&lt;/ord:ParentOrderId&gt;
+               &lt;ord:OrderTypeId&gt;${header.OrderTypeId}&lt;/ord:OrderTypeId&gt;
+               &lt;ord:ParentOrderId&gt;${header.ParentOrderId}&lt;/ord:ParentOrderId&gt;
                &lt;ord:PayToAccount&gt;&lt;/ord:PayToAccount&gt;
                &lt;ord:PayToAccountId&gt;&lt;/ord:PayToAccountId&gt;
                &lt;ord:PayToAccountIntegrationId&gt;&lt;/ord:PayToAccountIntegrationId&gt;
@@ -223,8 +226,8 @@
                &lt;ord:PriceListId&gt;&lt;/ord:PriceListId&gt;
                &lt;ord:PriceListIntegrationId&gt;&lt;/ord:PriceListIntegrationId&gt;
                &lt;ord:PrimaryOrganization&gt;&lt;/ord:PrimaryOrganization&gt;
-               &lt;ord:PrimaryOrganizationId>${header.PrimaryOrganizationId}&lt;/ord:PrimaryOrganizationId&gt;
-               &lt;ord:PrimaryPositionId>${header.PrimaryPositionId}&lt;/ord:PrimaryPositionId&gt;
+               &lt;ord:PrimaryOrganizationId&gt;${header.PrimaryOrganizationId}&lt;/ord:PrimaryOrganizationId&gt;
+               &lt;ord:PrimaryPositionId&gt;${header.PrimaryPositionId}&lt;/ord:PrimaryPositionId&gt;
                &lt;ord:ProjectId&gt;&lt;/ord:ProjectId&gt;
                &lt;ord:ProjectIntegrationId&gt;&lt;/ord:ProjectIntegrationId&gt;
                &lt;ord:ProjectName&gt;&lt;/ord:ProjectName&gt;
@@ -235,7 +238,7 @@
                &lt;ord:RequestedDate&gt;&lt;/ord:RequestedDate&gt;
                &lt;ord:ReturnReason&gt;&lt;/ord:ReturnReason&gt;
                &lt;ord:ReturnToAccount&gt;&lt;/ord:ReturnToAccount&gt;
-               &lt;ord:ReturnToAccountId>${header.ReturnToAccountId}&lt;/ord:ReturnToAccountId&gt;
+               &lt;ord:ReturnToAccountId&gt;${header.ReturnToAccountId}&lt;/ord:ReturnToAccountId&gt;
                &lt;ord:ReturnToAccountIntegrationId&gt;&lt;/ord:ReturnToAccountIntegrationId&gt;
                &lt;ord:ReturnToAccountSite&gt;&lt;/ord:ReturnToAccountSite&gt;
                &lt;ord:ReturnToAddressId&gt;&lt;/ord:ReturnToAddressId&gt;
@@ -256,10 +259,10 @@
                &lt;ord:ShipToContactId&gt;&lt;/ord:ShipToContactId&gt;
                &lt;ord:ShipToContactIntegrationId&gt;&lt;/ord:ShipToContactIntegrationId&gt;
                &lt;ord:CarrierPriority&gt;&lt;/ord:CarrierPriority&gt;
-               &lt;ord:SourceInventoryLocationId>${header.SourceInventoryLocationId}&lt;/ord:SourceInventoryLocationId&gt;
+               &lt;ord:SourceInventoryLocationId&gt;${header.SourceInventoryLocationId}&lt;/ord:SourceInventoryLocationId&gt;
                &lt;ord:SourceInventoryLocationIntegrationId&gt;&lt;/ord:SourceInventoryLocationIntegrationId&gt;
                &lt;ord:SourceInventoryLocation&gt;&lt;/ord:SourceInventoryLocation&gt;
-               &lt;ord:Status>${header.Status}&lt;/ord:Status&gt;
+               &lt;ord:Status&gt;${header.Status}&lt;/ord:Status&gt;
                &lt;ord:SubmitDate&gt;&lt;/ord:SubmitDate&gt;
                &lt;ord:TaxAmount&gt;&lt;/ord:TaxAmount&gt;
                &lt;ord:TaxExempt&gt;&lt;/ord:TaxExempt&gt;
@@ -289,13 +292,13 @@
                &lt;ord:QuoteStatus&gt;&lt;/ord:QuoteStatus&gt;
                &lt;ord:TMNoPAN&gt;&lt;/ord:TMNoPAN&gt;
                &lt;ord:OrderPINNumber&gt;&lt;/ord:OrderPINNumber&gt;
-               &lt;ord:TMChannel>${header.TMChannel}&lt;/ord:TMChannel&gt;
+               &lt;ord:TMChannel&gt;${header.TMChannel}&lt;/ord:TMChannel&gt;
                &lt;ord:OTCAccountId&gt;&lt;/ord:OTCAccountId&gt;
-               &lt;ord:TMSparesOrderType>${header.TMSparesOrderType}&lt;/ord:TMSparesOrderType&gt;
-               &lt;ord:TMOrderReason>${header.TMOrderReason}&lt;/ord:TMOrderReason&gt;
-               &lt;ord:TMOTCExpirydate>${header.TMOTCExpirydate}&lt;/ord:TMOTCExpirydate&gt;
+               &lt;ord:TMSparesOrderType&gt;${header.TMSparesOrderType}&lt;/ord:TMSparesOrderType&gt;
+               &lt;ord:TMOrderReason&gt;${header.TMOrderReason}&lt;/ord:TMOrderReason&gt;
+               &lt;ord:TMOTCExpirydate&gt;${header.TMOTCExpirydate}&lt;/ord:TMOTCExpirydate&gt;
                &lt;ord:TMOrderConfirmationNo&gt;&lt;/ord:TMOrderConfirmationNo&gt;
-               &lt;ord:TMGSTIN>${header.TMGSTIN}&lt;/ord:TMGSTIN&gt;
+               &lt;ord:TMGSTIN&gt;${header.TMGSTIN}&lt;/ord:TMGSTIN&gt;
                &lt;ord:ListOfRelatedShipment&gt;
                   &lt;ord:RelatedShipment&gt;
                            &lt;ord:Id&gt;&lt;/ord:Id&gt;
@@ -304,7 +307,7 @@
                   &lt;/ord:RelatedShipment&gt;
                &lt;/ord:ListOfRelatedShipment&gt;
                &lt;ord:ListOfLineItems&gt;
-                  &lt;ord:LineItems operation="">
+                  &lt;ord:LineItems operation=""&gt;
                            &lt;ord:Id&gt;&lt;/ord:Id&gt;
                            &lt;ord:AvailableStatus&gt;&lt;/ord:AvailableStatus&gt;
                            &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
@@ -319,7 +322,7 @@
                            &lt;ord:IntegrationStatus&gt;&lt;/ord:IntegrationStatus&gt;
                            &lt;ord:BasePrice&gt;&lt;/ord:BasePrice&gt;
                            &lt;ord:BillableFlag&gt;&lt;/ord:BillableFlag&gt;
-                           &lt;ord:TMProduct>${header.TMProduct}&lt;/ord:TMProduct&gt;
+                           &lt;ord:TMProduct&gt;${header.TMProduct}&lt;/ord:TMProduct&gt;
                            &lt;ord:TMExcludePricingFlag&gt;&lt;/ord:TMExcludePricingFlag&gt;
                            &lt;ord:TMCurrencyCode&gt;&lt;/ord:TMCurrencyCode&gt;
                            &lt;ord:TMExchangeDate&gt;&lt;/ord:TMExchangeDate&gt;
@@ -349,11 +352,11 @@
                            &lt;ord:OrderNumber&gt;&lt;/ord:OrderNumber&gt;
                            &lt;ord:PackageNameInbound&gt;&lt;/ord:PackageNameInbound&gt;
                            &lt;ord:ParentOrderItemId&gt;&lt;/ord:ParentOrderItemId&gt;
-                           &lt;ord:PartNumber>${header.PartNumber}&lt;/ord:PartNumber&gt;
+                           &lt;ord:PartNumber&gt;${header.PartNumber}&lt;/ord:PartNumber&gt;
                            &lt;ord:ProductName&gt;&lt;/ord:ProductName&gt;
                            &lt;ord:ProductId&gt;&lt;/ord:ProductId&gt;
                            &lt;ord:ProductIntegrationId&gt;&lt;/ord:ProductIntegrationId&gt;
-                           &lt;ord:RequestedQuantity>${header.RequestedQuantity}&lt;/ord:RequestedQuantity&gt;
+                           &lt;ord:RequestedQuantity&gt;${header.RequestedQuantity}&lt;/ord:RequestedQuantity&gt;
                            &lt;ord:ShipQuantity&gt;&lt;/ord:ShipQuantity&gt;
                            &lt;ord:ReturnToAccountName&gt;&lt;/ord:ReturnToAccountName&gt;
                            &lt;ord:ReturnToAccountId&gt;&lt;/ord:ReturnToAccountId&gt;
@@ -402,7 +405,7 @@
                            &lt;ord:TMPCAMCEnqContractKM&gt;&lt;/ord:TMPCAMCEnqContractKM&gt;
                            &lt;ord:TMPCAMCType&gt;&lt;/ord:TMPCAMCType&gt;
                            &lt;ord:ListOfPromisedScheduleLines&gt;
-                              &lt;ord:PromisedScheduleLines operation="">
+                              &lt;ord:PromisedScheduleLines operation=""&gt;
                                        &lt;ord:Id&gt;&lt;/ord:Id&gt;
                                        &lt;ord:AvailableStatus&gt;&lt;/ord:AvailableStatus&gt;
                                        &lt;ord:AvailableStatusAsOfDate&gt;&lt;/ord:AvailableStatusAsOfDate&gt;
@@ -422,7 +425,7 @@
                         &lt;/ord:PromisedScheduleLines&gt;
                      &lt;/ord:ListOfPromisedScheduleLines&gt;
                            &lt;ord:ListOfRequestedScheduleLines&gt;
-                              &lt;ord:RequestedScheduleLines operation="">
+                              &lt;ord:RequestedScheduleLines operation=""&gt;
                                        &lt;ord:Id&gt;&lt;/ord:Id&gt;
                                        &lt;ord:LineNumber&gt;&lt;/ord:LineNumber&gt;
                                        &lt;ord:OrderItemId&gt;&lt;/ord:OrderItemId&gt;
@@ -435,7 +438,7 @@
                         &lt;/ord:RequestedScheduleLines&gt;
                      &lt;/ord:ListOfRequestedScheduleLines&gt;
                            &lt;ord:ListOfAttributes&gt;
-                              &lt;ord:Attributes operation="">
+                              &lt;ord:Attributes operation=""&gt;
                                        &lt;ord:Id&gt;&lt;/ord:Id&gt;
                                        &lt;ord:ActionCode&gt;&lt;/ord:ActionCode&gt;
                                        &lt;ord:AttributeId&gt;&lt;/ord:AttributeId&gt;
@@ -456,22 +459,22 @@
                   &lt;/ord:LineItems&gt;
                &lt;/ord:ListOfLineItems&gt;
                &lt;ord:ListOfRelatedOrganization&gt;
-                  &lt;ord:RelatedOrganization IsPrimaryMVG="">
-                           &lt;ord:Organization>${header.Organization}&lt;/ord:Organization&gt;
+                  &lt;ord:RelatedOrganization IsPrimaryMVG=""&gt;
+                           &lt;ord:Organization&gt;${header.Organization}&lt;/ord:Organization&gt;
                            &lt;ord:OrganizationId&gt;&lt;/ord:OrganizationId&gt;
-                           &lt;ord:IntegrationId>${header.LineItemsIntegrationId}&lt;/ord:IntegrationId&gt;
+                           &lt;ord:IntegrationId&gt;${header.LineItemsIntegrationId}&lt;/ord:IntegrationId&gt;
                   &lt;/ord:RelatedOrganization&gt;
                &lt;/ord:ListOfRelatedOrganization&gt;
                &lt;ord:ListOfRelatedSalesRep&gt;
-                  &lt;ord:RelatedSalesRep IsPrimaryMVG="">
+                  &lt;ord:RelatedSalesRep IsPrimaryMVG=""&gt;
                            &lt;ord:Login&gt;&lt;/ord:Login&gt;
-                           &lt;ord:Id>${header.RelatedSalesRepId}&lt;/ord:Id&gt;
+                           &lt;ord:Id&gt;${header.RelatedSalesRepId}&lt;/ord:Id&gt;
                            &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
-                           &lt;ord:Position>${header.Position}&lt;/ord:Position&gt;
+                           &lt;ord:Position&gt;${header.Position}&lt;/ord:Position&gt;
                   &lt;/ord:RelatedSalesRep&gt;
                &lt;/ord:ListOfRelatedSalesRep&gt;
                &lt;ord:ListOfPayments&gt;
-                  &lt;ord:Payments operation="">
+                  &lt;ord:Payments operation=""&gt;
                            &lt;ord:Id&gt;&lt;/ord:Id&gt;
                            &lt;ord:AccountNumber&gt;&lt;/ord:AccountNumber&gt;
                            &lt;ord:AuthorizationCode&gt;&lt;/ord:AuthorizationCode&gt;
@@ -530,7 +533,7 @@
                   &lt;/ord:Payments&gt;
                &lt;/ord:ListOfPayments&gt;
                &lt;ord:ListOfTMAction&gt;
-                  &lt;ord:TMAction operation="">
+                  &lt;ord:TMAction operation=""&gt;
                            &lt;ord:Id&gt;&lt;/ord:Id&gt;
                            &lt;ord:IntegrationId&gt;&lt;/ord:IntegrationId&gt;
                            &lt;ord:TMInvoiceAmount&gt;&lt;/ord:TMInvoiceAmount&gt;
@@ -557,8 +560,8 @@
 &lt;/soapenv:Envelope&gt;
             	</simple>
             </setBody>
-	<log id="_log1" message="******** REQUEST BODY ********* ${body}"/>
-    <to id="_to3" pattern="InOut" uri="cxf:bean:rsAPI"/>
+            <log id="_log1" message="******** REQUEST BODY ********* ${body}"/>
+            <to id="_to3" pattern="InOut" uri="cxf:bean:rsAPI"/>
         </route>
     </camelContext>
 </beans>

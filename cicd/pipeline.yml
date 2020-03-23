@@ -1,0 +1,18 @@
+kind: 'BuildConfig'
+apiVersion: 'v1'
+metadata:
+  name: 'cpotcorder-api'
+  namespace: cicd
+spec:
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/swapnalitoraskarttl/RepoTMCVCPOTCOrderInsertOrUpdate.git'
+    sourceSecret:
+      name: offtake-vme  
+  strategy:
+    jenkinsPipelineStrategy:
+      env:
+      - name: PROJECT
+        value: dev-esb
+      jenkinsfilePath: 'Jenkinsfile'
